@@ -61,10 +61,10 @@ int main()
     {
         printf("Experiment #%d\n", count);
         printf("--------------------------------------------------\n");
-        		
+
         struct float_points f_delta_solution = solve_equation_float(f_delta);
         f_distance = calculate_distance_float(f_solution, f_delta_solution);
-        		
+
         printf("Floats:\n");
         printf("x1: %.18f x2: %.18f \n", f_solution.x1,  f_solution.x2);
         printf("Delta solutions x1: %.18f Delta x2: %.18f \n", f_delta_solution.x1,  f_delta_solution.x2);
