@@ -3,7 +3,7 @@
 
 #define MAX_DEVIATION 0.000001
 
-struct float_points
+struct float_point
 {
     float x1;
     float x2;
@@ -15,9 +15,9 @@ struct double_point
     double x2;
 };
 
-struct float_points solve_equation_float(float delta)
+struct float_point solve_equation_float(float delta)
 {
-    struct float_points solution;
+    struct float_point solution;
 
     solution.x2 = (2.0001f - 2.0f + delta) * 10000.0f;
     solution.x1 = 2.0f - solution.x2;
@@ -35,7 +35,7 @@ struct double_point solve_equation_double(double delta)
     return solution;
 }
 
-float calculate_distance_float(struct float_points point1, struct float_points point2)
+float calculate_distance_float(struct float_point point1, struct float_point point2)
 {
     return sqrtf((point1.x1 - point2.x1) * (point1.x1 - point2.x1) + (point1.x2 - point2.x2) * (point1.x2 - point2.x2));
 }
@@ -47,7 +47,7 @@ double calculate_distance_double(struct double_point point1, struct double_point
 
 int main()
 {
-    struct float_points f_solution = solve_equation_float(0.0f);
+    struct float_point f_solution = solve_equation_float(0.0f);
     struct double_point d_solution = solve_equation_double(0.0);
 
     float f_delta = 0.0001f;
@@ -62,7 +62,7 @@ int main()
         printf("Experiment #%d\n", count);
         printf("--------------------------------------------------\n");
 
-        struct float_points f_delta_solution = solve_equation_float(f_delta);
+        struct float_point f_delta_solution = solve_equation_float(f_delta);
         f_distance = calculate_distance_float(f_solution, f_delta_solution);
 
         printf("Floats:\n");
