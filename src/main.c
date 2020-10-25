@@ -59,30 +59,30 @@ int main()
     int count = 1;
     do
     {
-		printf("Experiment #%d\n", count);
-		printf("--------------------------------------------------\n");
-				
-		struct float_points f_delta_solution = solve_equation_float(f_delta);
-		f_distance = calculate_distance_float(f_solution, f_delta_solution);
-				
-		printf("Floats:\n");
-		printf("x1: %.18f x2: %.18f \n", f_solution.x1,  f_solution.x2);
-		printf("Delta solutions x1: %.18f Delta x2: %.18f \n", f_delta_solution.x1,  f_delta_solution.x2);
-		printf("Delta: %.18f Distance: %.16f \n", f_delta, f_distance);
-		printf("\n");
-		f_delta /= 2.0f;
+        printf("Experiment #%d\n", count);
+        printf("--------------------------------------------------\n");
+        		
+        struct float_points f_delta_solution = solve_equation_float(f_delta);
+        f_distance = calculate_distance_float(f_solution, f_delta_solution);
+        		
+        printf("Floats:\n");
+        printf("x1: %.18f x2: %.18f \n", f_solution.x1,  f_solution.x2);
+        printf("Delta solutions x1: %.18f Delta x2: %.18f \n", f_delta_solution.x1,  f_delta_solution.x2);
+        printf("Delta: %.18f Distance: %.16f \n", f_delta, f_distance);
+        printf("\n");
+        f_delta /= 2.0f;
 
-		struct double_point d_delta_solution = solve_equation_double(d_delta);
-		d_distance = calculate_distance_double(d_solution, d_delta_solution);
+        struct double_point d_delta_solution = solve_equation_double(d_delta);
+        d_distance = calculate_distance_double(d_solution, d_delta_solution);
 
-		printf("Doubles:\n");
-		printf("x1: %.18lf x2: %.18lf \n", d_solution.x1,  d_solution.x2);
-		printf("Delta solutions x1: %.18lf Delta x2: %.18lf \n", d_delta_solution.x1,  d_delta_solution.x2);
-		printf("Delta: %.18lf Distance: %.16lf \n", d_delta, d_distance);
-		printf("--------------------------------------------------\n\n");
-		d_delta /= 2.0;
+        printf("Doubles:\n");
+        printf("x1: %.18lf x2: %.18lf \n", d_solution.x1,  d_solution.x2);
+        printf("Delta solutions x1: %.18lf Delta x2: %.18lf \n", d_delta_solution.x1,  d_delta_solution.x2);
+        printf("Delta: %.18lf Distance: %.16lf \n", d_delta, d_distance);
+        printf("--------------------------------------------------\n\n");
+        d_delta /= 2.0;
 
-		count++;
+        count++;
     } while (f_distance > MAX_DEVIATION || d_distance > MAX_DEVIATION);
 
     return 0;
