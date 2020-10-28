@@ -1,89 +1,75 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MAX_DEVIATION 0.000001
+#define f_MAX_DEVIATION 0.000001f
+#define d_MAX_DEVIATION 0.000001
 
-struct float_point
+void solve_as_float_and_double()
 {
-    float x1;
-    float x2;
-};
-
-struct double_point
-{
-    double x1;
-    double x2;
-};
-
-struct float_point solve_equation_float(float delta)
-{
-    struct float_point solution;
-
-    solution.x2 = (2.0001f - 2.0f + delta) * 10000.0f;
-    solution.x1 = 2.0f - solution.x2;
-
-    return solution;
-}
-
-struct double_point solve_equation_double(double delta)
-{
-    struct double_point solution;
-
-    solution.x2 = (2.0001 - 2.0 + delta) * 10000.0;
-    solution.x1 = 2.0 - solution.x2;
-
-    return solution;
-}
-
-float calculate_distance_float(struct float_point point1, struct float_point point2)
-{
-    return sqrtf((point1.x1 - point2.x1) * (point1.x1 - point2.x1) + (point1.x2 - point2.x2) * (point1.x2 - point2.x2));
-}
-
-double calculate_distance_double(struct double_point point1, struct double_point point2)
-{
-    return sqrtf((point1.x1 - point2.x1) * (point1.x1 - point2.x1) + (point1.x2 - point2.x2) * (point1.x2 - point2.x2));
-}
-
-int main()
-{
-    struct float_point f_solution = solve_equation_float(0.0f);
-    struct double_point d_solution = solve_equation_double(0.0);
-
-    float f_delta = 0.0001f;
-    double d_delta = 0.0001;
-
+    //Float field
+    float f_deviation = 0.0001f;
     float f_distance;
+
+    float f_start_x = 1.0f, f_start_y = 1.0f;
+    float f_delta_x, f_delta_y;
+    float f_solution;
+    //
+
+    //Double field
+    double d_deviation = 0.0001;
     double d_distance;
+
+    double d_start_x = 1.0, d_start_y = 1.0;
+    double d_delta_x, d_delta_y;
+    double d_solution;
+    //
 
     int count = 1;
     do
     {
-        printf("Experiment #%d\n", count);
+        //Floats
+        f_delta_y = ((2.0001f + f_deviation) - 2.0f) / 0.0001f;
+        f_delta_x = 2.0f - f_delta_y;
+        f_solution = 1.0001f * f_delta_y + f_delta_x;
+
+        f_distance = sqrtf((f_start_x - f_delta_x) * (f_start_x - f_delta_x) + 
+            (f_start_y - f_delta_y) * (f_start_y - f_delta_y));
+
+        printf("Experiment #%i\n", count);
         printf("--------------------------------------------------\n");
+        printf("<Floats>\n");
+        printf("Delta X: %.30f, Delta Y: %.30f\n", f_delta_x, f_delta_y);
+        printf("Solution: %.30f\n", f_solution);
+        printf("Deviation: %.30f\n", f_deviation);
+        printf("Distance: %.30f\n", f_distance);
+        //
 
-        struct float_point f_delta_solution = solve_equation_float(f_delta);
-        f_distance = calculate_distance_float(f_solution, f_delta_solution);
+        //Doubles
+        d_delta_y = ((2.0001 + d_deviation) - 2.0) / 0.0001;
+        d_delta_x = 2.0 - d_delta_y;
+        d_solution = 1.0001 * d_delta_y + d_delta_x;
 
-        printf("Floats:\n");
-        printf("x1: %.18f x2: %.18f \n", f_solution.x1,  f_solution.x2);
-        printf("Delta solutions x1: %.18f Delta x2: %.18f \n", f_delta_solution.x1,  f_delta_solution.x2);
-        printf("Delta: %.18f Distance: %.16f \n", f_delta, f_distance);
-        printf("\n");
-        f_delta /= 2.0f;
+        d_distance = sqrt((d_start_x - d_delta_x) * (d_start_x - d_delta_x) + 
+            (d_start_y - d_delta_y) * (d_start_y - d_delta_y));
 
-        struct double_point d_delta_solution = solve_equation_double(d_delta);
-        d_distance = calculate_distance_double(d_solution, d_delta_solution);
-
-        printf("Doubles:\n");
-        printf("x1: %.18lf x2: %.18lf \n", d_solution.x1,  d_solution.x2);
-        printf("Delta solutions x1: %.18lf Delta x2: %.18lf \n", d_delta_solution.x1,  d_delta_solution.x2);
-        printf("Delta: %.18lf Distance: %.16lf \n", d_delta, d_distance);
+        printf("\n<Doubles>\n");
+        printf("Delta X: %.30lf, Delta Y: %.30lf\n", d_delta_x, d_delta_y);
+        printf("Solution: %.30lf\n", d_solution);
+        printf("Deviation: %.30lf\n", d_deviation);
+        printf("Distance: %.30lf\n", d_distance);
         printf("--------------------------------------------------\n\n");
-        d_delta /= 2.0;
+        //
+
+        f_deviation /= 2.0f;
+        d_deviation /= 2.0;
 
         count++;
-    } while (f_distance > MAX_DEVIATION || d_distance > MAX_DEVIATION);
+    }while(f_distance > f_MAX_DEVIATION && d_distance > d_MAX_DEVIATION);
+}
+
+int main()
+{
+    solve_as_float_and_double();
 
     return 0;
 }
